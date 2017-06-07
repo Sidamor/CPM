@@ -1,0 +1,13 @@
+32位编译
+编译注意：
+1.sqlite编译
+
+	第一步: mkdir build	
+	第二步: 进入build
+	第三步: linux32 ../configure --prefix=/home/CPM_IPC_V4_cf/sqlite-autoconf-3071401/build/target CCFLAGS="-m32 " CPPFLAGS="-m32 " CXXFLAGS="-m32" CFLAGS="-m32"
+	第四步: make clean;make;
+	第五步: make install;
+	第六步: 生成的libsqlite3.so.0.8.6改名为libsqlite3.so拷贝到www中作为动态链接库
+		
+
+2.CPM编译

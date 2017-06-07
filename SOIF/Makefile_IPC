@@ -1,0 +1,7 @@
+main :  ../lib/SOIF.so 
+
+../lib/SOIF.so : 
+	g++ -g -m32 -Wall -DDEBUG  -D_REENTRANT -shared -lpthread -I../CPM/inc -I../inc -I./  -o../lib/SOIF.so ./SOIF.cpp ../lib/IniFile.so ../lib/Shared.so ../lib/ThreadPool.so ../lib/MsgMgrBase.so ../lib/MemMgmt.so  ../lib/HardIF.so
+
+clean:
+	rm ../lib/SOIF.so

@@ -1,0 +1,75 @@
+2015-1-26
+	时间BUG修正：联动日志中时间-8小时错误
+	替换文件CPM
+	修改内容：
+	DevInfoContainer.cpp里 void CDevInfoContainer::InsterIntoAlarmInfo(ACTION_MSG actionMsg, int actRet)函数中
+	数据库语句datetime('now')改为datetime('now', 'localtime')
+
+
+2015-1-23
+	修正CPMClock 1 取机器时间到系统时间的错误
+	替换文件：/root/CPMClock
+	修改内容:main.cpp中main函数
+	
+	做时间操作syscmd("date ...")之前，加入环境变量设置-时区设置
+	putenv("TZ=CST-8");
+	tzset();	
+
+2015-1-4
+	修正admin页面修改时间
+	替换文件：corp_info.cgi
+	修改内容:corp_info.c中两个函数
+	//系统时间
+	static void TimeConfig();
+	static bool SetSysTime();
+	做时间操作之前，加入BOA环境变量设置-时区设置
+	//BOA环境变量-时区设置
+	putenv("TZ=CST-8");
+	tzset();	
+
+2014-12-29
+	修正所有gmtime（UTC时间）为localtime（当地时间）
+	替换文件：1,Shared.so(lib目录下); 2,HardIF.so(lib目录下);	3,CPM（CPM目录下);
+
+//CPM改版前最终版,	采集属性值128字节
+2013-07-17
+	
+2013-06-07
+	修正CDevInfoContainer::GetNextAttrNode，将
+	strncpy(strNextAttrId, pNode->ChannelNextId, DEVICE_ATTR_ID_LEN);
+	修正为
+	strncpy(strNextAttrId, pNode->NextId, DEVICE_ATTR_ID_LEN);
+2013-05-29
+	增加SCH卡片进出管理模块(主设备与过滤设备结合使用)
+	修改网络型传感器动作下发协议格式（以前未启用）
+	取消模块依靠编译配置的模式，采用数据库配置模式
+	最大支持256个设备
+	最大支持1024个设备模式
+	最大支持2048个属性采集
+	最大支持2048个动作属性
+	最大支持1024条联动
+	
+2013-04-26
+	数据解析格式增加LT字段，以前是根据L字段截取定长的数据，添加LT后，如果LT为0则截取定长L数据，如果为1则截取起始到反向L长度的数据
+	修正Hex2String用法，第三个长度应该为第二个参数长度的两倍
+2013-03-29
+	协议采用V1.0.1.8,修改2001实时状态查询指令，“参数信息,格式{参数编号,参数名，参数值参数单位,参数值，状态是否标准，是否为网元状态1真0假}”，旧版为“参数信息,格式{状态，参数名，参数值参数单位}如{1,温度，17℃}”
+2013-03-06
+	修正状态类数据取到值后为浮点型bug，在BestLable DecodeByFormatEx，DecodeByFormat添加CHAR和UCHAR的单独处理
+	修正开关量，模拟量类数据布防撤防bug，在CDevInfoContainer::UpdateDeviceRollNodeByChannel添加设备不撤防判断
+2013-03-02
+	修正撤防后重启程序，再布防不能继续采集数据bug
+2013-01-30
+	Sharp.cpp transpolish修正局部变量初始化
+	修正布防时全部属性布防bug
+	修正联动日志上传。（SendToActionSource补足空格）
+2013-01-29
+  修正数据库重操作失误
+  修正sscanf使用错误
+2013-01-26
+	采用预编译控制各种接口模块的启动
+	修正短信查询、动作、帮助指令
+	修正虚拟动作数据库查询
+2012-02-13
+	/lib下更新SpiApi.a， 添加SPI 485缓存清空接口
+	main.cpp 添加开门狗程序

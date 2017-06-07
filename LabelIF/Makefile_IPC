@@ -1,0 +1,7 @@
+main :  ../lib/LabelIF.so 
+
+../lib/LabelIF.so : 
+	g++ -g -m32 -Wall -DDEBUG  -D_REENTRANT -shared -lpthread -I../inc -o../lib/LabelIF.so ./LabelIF.cpp ./Crc.cpp
+
+clean:
+	rm ../lib/LabelIF.so

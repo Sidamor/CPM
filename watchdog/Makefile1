@@ -1,0 +1,51 @@
+IMAGENAME = watchdog
+
+CROSS_COMPILE = /usr/local/arm/3.4.1/bin/arm-linux-
+#CROSS_COMPILE = /usr/local/arm/3.4.1_linux2.6.27/bin/arm-linux-
+#CROSS_COMPILE = /home/microsys/zhuxm/arm-2007q1/bin/arm-none-linux-gnueabi-
+CC=$(CROSS_COMPILE)gcc
+
+#-----------------------------------------------------------------------------
+#The Include Path and Library Path for Driver
+#-----------------------------------------------------------------------------
+#INC  = -I/home/tanglimin/linux-2.6.27/include
+#-----------------------------------------------------------------------------
+#generate c compiler option
+#-----------------------------------------------------------------------------
+CFLAGS = -Wall -g  $(INC)
+OFLAGS = $(LIB) -pthread
+
+
+#=============================================================================
+# Put all object files here
+#=============================================================================
+OBJECTS	= \
+	watchdog.o\
+
+#=============================================================================
+# Compile rules
+#=============================================================================
+%.o : %.c
+	echo Compiling: $<
+	$(CC) -c $(CFLAGS) $< 
+	echo
+#=============================================================================
+# Target builds
+#=============================================================================
+all : $(IMAGENAME)
+
+$(IMAGENAME) : $(OBJECTS)
+	$(CC) -o $(IMAGENAME) $(OBJECTS) $(OFLAGS) -DGCC -O3
+	chmod 744 $(IMAGENAME)
+#	$(CROSS_COMPILE)strip $(IMAGENAME)
+	rm -f $(OBJECTS)
+	@date
+	@sz $(IMAGENAME) 
+	rm -f ../release/$(IMAGENAME) 
+	cp $(IMAGENAME) ../release
+	
+clean:
+	@rm -f $(OBJECTS)
+	@rm -f $(IMAGENAME)
+	@rm -f $(OBJECTS_TEST490)
+	@rm -f $(IMAGENAME3)
